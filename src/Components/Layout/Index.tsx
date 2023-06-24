@@ -2,13 +2,13 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import Slider from './Sidebar'
 
-const Index = () => {
+const Layout = ({ children }: any) => {
     return (
-        <div>
+        <div className='grid grid-cols-2'>
             <Sidebar />
-            {/* <Slider /> */}
+            {children}
         </div>
     )
 }
 
-export default Index
+export default Layout
