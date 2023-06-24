@@ -20,7 +20,7 @@ const Stories = () => {
   });
 
   return (
-    <div className="">
+    <div className="w-full">
       <div ref={sliderRef} className="keen-slider">
         <div className="flex justify-center gap-2 px-4 ">
           {storyData.map((item, index) => {

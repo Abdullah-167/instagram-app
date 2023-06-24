@@ -1,14 +1,14 @@
 import React from 'react'
 import Sidebar from './Sidebar'
-import Slider from './Sidebar'
+import Stories from './Stories'
+import LeftSide from './LeftSide'
 
 const Layout = ({ children }: any) => {
     return (
-        <div className='grid grid-cols-2'>
+        <div className='grid grid-cols-12'>
             <Sidebar />
-            {children}
         </div>
     )
 }
 
-export default Layout
+export default Layout;

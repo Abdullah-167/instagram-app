@@ -11,7 +11,6 @@ import { GoReport } from 'react-icons/go';
 import { FaFacebookMessenger, FaRegHeart } from 'react-icons/fa';
 import useOutsideClick from '../Hooks/useOutsideClick';
 
-
 const Sidebar = () => {
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -28,7 +27,7 @@ const Sidebar = () => {
   useOutsideClick(menuRef, handleCloseMenu);
 
   return (
-    <div className='max-w-[246px] min-w-[246px] border border-gray-300 h-screen fixed'>
+    <div className='max-w-[200px] min-w-[200px] border border-gray-300 h-screen sticky right-0'>
       <div className='py-8'>
         <div className='flex pl-6 mb-6'>
           <Image src={'/logo.png'} alt={'logo'} width={100} height={100} />
@@ -39,7 +38,7 @@ const Sidebar = () => {
               <div className='flex items-center gap-4 my-0.5 max-w-[200px] hover:bg-gray-100 pl-4 rounded-md py-3 cursor-pointer transition-all duration-700' key={index}
                 onClick={() => index === 8 && handleMenu()}
               >
-                <span className={`text-2xl ${index === 6 ? 'rounded-full' : ''}`}>{item.icon}</span>
+                <span className={`text-2xl `}>{item.icon}</span>
                 <p>{item.text}</p>
               </div>
             )
