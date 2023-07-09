@@ -18,28 +18,88 @@
 }
 
 
-arrow {
+.arrow {
   width: 20px;
   height: 20px;
   position: absolute;
-  top: 40%;
+  background-color: rgb(255, 255, 255);
+  top: 30px;
   transform: translateY(-50%);
   fill: #000;
   cursor: pointer;
-  background-color: white;
   border-radius: 30px;
   padding: 5px;
 }
 
 .arrow--left {
-  left: 5px;
+  left: 20px;
 }
 
 .arrow--right {
   left: auto;
-  right: 5px;
+  right: 60px;
 }
 
 .arrow--disabled {
   fill: rgba(255, 255, 255, 0.5);
+}
+
+
+.modal-open {
+  overflow: hidden;
+}
+
+.custom-checkbox {
+  /* Hide the default checkbox */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  /* Set the desired size and border */
+  width: 20px;
+  height: 20px;
+  border: 2px solid black;
+  /* Apply the rounded border */
+  border-radius: 50%;
+  /* Add a custom background color when checked */
+  background-color: white;
+  /* Position the pseudo-element */
+  position: relative;
+}
+
+/* Custom checkbox styles when checked */
+
+.custom-checkbox:checked {
+  background-color: #1aa0f7;
+  border: none;
+}
+
+/* Pseudo-element for the check mark */
+.custom-checkbox::before {
+  content: "";
+  /* Position the check mark */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Specify the check mark size */
+  width: 10px;
+  height: 10px;
+  /* Hide the check mark by default */
+  opacity: 0;
+  /* Transition for smooth animation */
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Show the check mark when the checkbox is checked */
+.custom-checkbox:checked::before {
+  opacity: 1;
+}
+
+/* SVG path for the check mark */
+.custom-checkbox::before {
+  content: "";
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2 6L5 9L10 4' stroke='white' stroke-width='3'  stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
 }

@@ -1,12 +1,12 @@
 import React from 'react'
-import Sidebar from '../Layout/Sidebar'
-import Home from '@/pages'
+import Sidebar from './Sidebar'
+import Stories from './Stories'
+import Home from './Home'
 
 const Index = () => {
     return (
-        <div>
-            <Sidebar />
-            <div>
+        <div className='flex'>
+            <div className="max-w-[700px] overflow-hidden mt-5">
                 <Home />
             </div>
         </div>
