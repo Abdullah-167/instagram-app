@@ -10,6 +10,7 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { GoReport } from 'react-icons/go';
 import { FaFacebookMessenger, FaRegHeart } from 'react-icons/fa';
 import useOutsideClick from '../Hooks/useOutsideClick';
+import Link from 'next/link';
 
 const Sidebar = () => {
 
@@ -35,12 +36,14 @@ const Sidebar = () => {
         <div className='flex flex-col justify-center pl-3'>
           {data.map((item, index) => {
             return (
-              <div className='flex items-center gap-4 my-0.5 max-w-[200px] hover:bg-gray-100 pl-4 rounded-md py-3 cursor-pointer transition-all duration-700' key={index}
-                onClick={() => index === 8 && handleMenu()}
-              >
-                <span className={`text-2xl `}>{item.icon}</span>
-                <p>{item.text}</p>
-              </div>
+              <Link href={item.link || ''}>
+                <div className='flex items-center gap-4 my-0.5 max-w-[200px] hover:bg-gray-100 pl-4 rounded-md py-3 cursor-pointer transition-all duration-700' key={index}
+                  onClick={() => index === 8 && handleMenu()}
+                >
+                  <span className={`text-2xl `}>{item.icon}</span>
+                  <p>{item.text}</p>
+                </div>
+              </Link>
             )
           })}
         </div>
@@ -78,6 +81,7 @@ export default Sidebar
 
 const data = [
   {
+    link: '/',
     text: 'Home',
     icon: <GrHomeRounded />
   },
@@ -86,14 +90,17 @@ const data = [
     icon: <BsSearch />
   },
   {
+    link: '/explore',
     text: 'Explore',
     icon: <AiOutlineCompass />
   },
   {
+    link: '/reels',
     text: 'Reels',
     icon: <BsPlayCircle />
   },
   {
+    link: '/messages',
     text: 'Messages',
     icon: <FaFacebookMessenger />
   },
@@ -106,6 +113,7 @@ const data = [
     icon: <VscDiffAdded />
   },
   {
+    link: '/profile',
     text: 'Profile',
     icon: <CgProfile />
   },

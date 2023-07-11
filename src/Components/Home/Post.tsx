@@ -1,20 +1,25 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
-import { BiBookmark } from 'react-icons/bi';
+import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { FiSend } from 'react-icons/fi';
-import { TbHeart, TbMessageCircle } from 'react-icons/tb';
+import { TbMessageCircle } from 'react-icons/tb';
 import { RxCross2 } from 'react-icons/rx';
 import { GrEmoji } from 'react-icons/gr';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 const Post = () => {
+
     const [open, setOpen] = useState(false);
     const [commentbox, setSommentbox] = useState(false);
-    const [liked, setliked] = useState(false)
-    const [commentLikes, setcommentLikes] = useState(null)
+    const [liked, setliked] = useState(false);
+    const [likedPosts, setLikedPosts] = useState<number[]>([]);
+    const [commentLikes, setcommentLikes] = useState<number[]>([]);
     const [commentText, setCommentText] = useState('');
     const [sendPstTo, setSendPstTo] = useState(false);
-    const [checkedIndices, setCheckedIndices] = useState([]);
+    const [checkedIndices, setCheckedIndices] = useState<number[]>([]);
+    const [postBookMark, setPostBookMark] = useState<number[]>([]);
+    const [innerCommentMark, setInnerCommentMark] = useState(false)
     const [searchText, setSearchText] = useState('');
 
     const handleDivClick = (index: any) => {
@@ -29,8 +34,8 @@ const Post = () => {
         setSommentbox(!commentbox)
     }
 
-    const handleOpen = (index: any) => {
-        setOpen(index);
+    const handleOpen = (id: any) => {
+        setOpen(id);
     };
 
     const handleOpenTwo = () => {
@@ -41,17 +46,40 @@ const Post = () => {
         setliked(!liked);
     };
 
-    const handleCommentLikes = (index: any) => {
-        setcommentLikes(index);
+
+    const handlePostLike = (index: number) => {
+        if (likedPosts.includes(index)) {
+            setLikedPosts(likedPosts.filter((likedIndex) => likedIndex !== index));
+        } else {
+            setLikedPosts([...likedPosts, index]);
+        }
     };
+
+
+    const handleCommentLikes = (index: number) => {
+        if (commentLikes.includes(index)) {
+            setcommentLikes(commentLikes.filter((likedComments) => likedComments !== index));
+        } else {
+            setcommentLikes([...commentLikes, index]);
+        }
+    };
+
+
+    const handlePostBookMatk = (index: any) => {
+        if (postBookMark.includes(index)) {
+            setPostBookMark(postBookMark.filter((bookMarkedPost) => bookMarkedPost != index));
+        } else {
+            setPostBookMark([...postBookMark, index]);
+        }
+    }
 
 
     const handleCommentTextChange = (e: any) => {
         setCommentText(e.target.value);
     };
 
-    const handleSendPost = (index: any) => {
-        setSendPstTo(index)
+    const handleSendPost = (id: any) => {
+        setSendPstTo(id)
     }
 
 
@@ -64,6 +92,10 @@ const Post = () => {
         setSearchText(e.target.value);
     };
 
+    const handleInnerCommentBookMark = () => {
+        setInnerCommentMark(!innerCommentMark)
+    }
+
 
     useEffect(() => {
         if (open) {
@@ -73,6 +105,7 @@ const Post = () => {
         }
     }, [open]);
 
+
     useEffect(() => {
         if (commentbox) {
             document.body.classList.add('modal-open');
@@ -80,6 +113,7 @@ const Post = () => {
             document.body.classList.remove('modal-open');
         }
     }, [commentbox]);
+
 
     useEffect(() => {
         if (sendPstTo) {
@@ -108,7 +142,7 @@ const Post = () => {
                                         {item.postTime}
                                     </p>
                                 </div>
-                                <div className='cursor-pointer hover:text-gray-400' onClick={() => handleOpen(index)}>
+                                <div className='cursor-pointer hover:text-gray-400' onClick={() => handleOpen(item.id)}>
                                     {item.prfileNameDots}
                                 </div>
                             </div>
@@ -118,10 +152,10 @@ const Post = () => {
                             <div className='flex text-3xl justify-between font-[100]'>
                                 <div className='flex gap-2 items-center'>
                                     <span
-                                        className={`cursor-pointer  hover:text-gray-400 ${liked ? 'text-red-500' : ''}`}
-                                        onClick={() => handleLike()}
+                                        className={`cursor-pointer ${likedPosts.includes(index) ? 'text-red-500' : ''}`}
+                                        onClick={() => handlePostLike(index)}
                                     >
-                                        {item.psotLikeBtn}
+                                        {likedPosts.includes(index) ? <AiFillHeart /> : item.psotLikeBtn}
                                     </span>
                                     <span className='cursor-pointer  hover:text-gray-400'
                                         onClick={() => handleCommentBox()}
@@ -129,11 +163,16 @@ const Post = () => {
                                         {item.postCommentBtn}
                                     </span>
                                     <span
-                                        onClick={() => handleSendPost(index)}
-                                        className=' cursor-pointer  hover:text-gray-400'> {item.psotSendBtn} </span>
+                                        onClick={() => handleSendPost(item.id)}
+                                        className=' cursor-pointer  hover:text-gray-400'> {item.psotSendBtn}
+                                    </span>
                                 </div>
                                 <div>
-                                    <span className=' cursor-pointer  hover:text-gray-400'> {item.postAddToFvrtBtn} </span>
+                                    <span className={`cursor-pointer ${postBookMark.includes(index) ? '' : 'hover:text-gray-400'}`}
+                                        onClick={() => handlePostBookMatk(index)}
+                                    >
+                                        {postBookMark.includes(index) ? <FaBookmark /> : item.postAddToFvrtBtn}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -142,6 +181,7 @@ const Post = () => {
 
 
                 {/* Post Options Modale */}
+
 
                 {open && (
                     <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-[1000]`}>
@@ -174,11 +214,14 @@ const Post = () => {
 
                 {/* Comment Box Modale */}
 
+
                 {commentbox && (
                     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-20">
                         <div className='flex items-center'>
                             <div className='pb-5 max-w-[550px]'>
-                                <Image className='min-h-[519px] max-h-[519px] object-cover rounded-sm pt-5' src={'/padhana.jpg'} alt={''} width={550} height={900} />
+                                <div>
+                                    <Image className='min-h-[519px] max-h-[519px] object-cover rounded-sm pt-5' src={'/padhana.jpg'} alt={''} width={550} height={900} />
+                                </div>
                             </div>
                             <div className="bg-white shadow-2xl min-w-[300px] max-w-[500px] w-full py-3 min-h-[490px] rounded-r-xl">
                                 <div className='flex justify-end'>
@@ -232,10 +275,10 @@ const Post = () => {
                                                         </div>
                                                     </div>
                                                     <span
-                                                        className={`cursor-pointer px-2 ${commentLikes === index ? 'text-red-500' : ''}`}
+                                                        className={`cursor-pointer px-2 ${commentLikes.includes(index) ? 'text-red-500' : ''}`}
                                                         onClick={() => handleCommentLikes(index)}
                                                     >
-                                                        {item.likebtn}
+                                                        {commentLikes.includes(index) ? <AiFillHeart /> : item.likebtn}
                                                     </span>
                                                 </div>
                                             )
@@ -247,14 +290,18 @@ const Post = () => {
                                                 className={`cursor-pointer  hover:text-gray-400 ${liked ? 'text-red-500' : ''}`}
                                                 onClick={() => handleLike()}
                                             >
-                                                <TbHeart />
+                                                <AiOutlineHeart />
                                             </span>
                                             <span className='cursor-pointer  hover:text-gray-400'>
                                                 <TbMessageCircle />
                                             </span>
                                             <span className=' cursor-pointer  hover:text-gray-400'> <FiSend /> </span>
                                         </div>
-                                        <span className=' cursor-pointer  hover:text-gray-400'> <BiBookmark /> </span>
+                                        <span className={`cursor-pointer ${innerCommentMark ? '' : 'hover:text-gray-400'}`}
+                                            onClick={() => handleInnerCommentBookMark()}
+                                        >
+                                            {innerCommentMark ? <FaBookmark /> : <FaRegBookmark />}
+                                        </span>
                                     </div>
                                     <div className='px-6 pb-2'>
                                         <h3 className='text-sm font-semibold leading-[6px]'>542 Likes</h3>
@@ -341,29 +388,29 @@ const Post = () => {
                                     <span className='text-sm font-semibold px-6'>Suggested</span>
 
                                     {commentData.filter((item) =>
-                                        item.profilename.toLowerCase().includes(searchText.toLowerCase())
-                                    )
-                                        .map((item, index) => {
-                                            const isChecked = checkedIndices.includes(index);
-                                            return (
-                                                <div
-                                                    className={`flex justify-between py-2 px-3 cursor-pointer ${isChecked ? 'checked' : ''}`}
-                                                    key={index}
-                                                    onClick={() => handleDivClick(index)}
-                                                >
-                                                    <div className='flex gap-1.5 items-center px-2'>
-                                                        <Image className='rounded-full min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] object-cover' src={item.img} alt={'comment-img'} width={45} height={45} />
-                                                        <div className='flex'>
-                                                            <div>
-                                                                <span className='block font-semibold text-sm cursor-pointer leading-0'>{item.profilename}</span>
-                                                                <span className='text-xs font-medium leading-0'>{item.comment}</span>
-                                                            </div>
+                                        item.profilename.toLowerCase().includes(searchText.toLowerCase()) ||
+                                        item.comment.toLowerCase().includes((searchText.toLowerCase()))
+                                    ).map((item, index) => {
+                                        const isChecked = checkedIndices.includes(index);
+                                        return (
+                                            <div
+                                                className={`flex justify-between py-2 px-3 cursor-pointer ${isChecked ? 'checked' : ''}`}
+                                                key={index}
+                                                onClick={() => handleDivClick(index)}
+                                            >
+                                                <div className='flex gap-1.5 items-center px-2'>
+                                                    <Image className='rounded-full min-w-[45px] min-h-[45px] max-w-[45px] max-h-[45px] object-cover' src={item.img} alt={'comment-img'} width={45} height={45} />
+                                                    <div className='flex'>
+                                                        <div>
+                                                            <span className='block font-semibold text-sm cursor-pointer leading-0'>{item.profilename}</span>
+                                                            <span className='text-xs font-medium leading-0'>{item.comment}</span>
                                                         </div>
                                                     </div>
-                                                    <input type='checkbox' name={`checkbox-${index}`} checked={isChecked} className='custom-checkbox' />
                                                 </div>
-                                            );
-                                        })}
+                                                <input type='checkbox' name={`checkbox-${index}`} checked={isChecked} className='custom-checkbox' />
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                                 <input
                                     className={`outline-none px-6 py-3 text-sm absolute w-full max-w-[490px] transition-all duration-300 ${checkedIndices.length > 0 ? 'opacity-100 bottom-14' : 'opacity-0 bottom-12'}`}
@@ -372,7 +419,7 @@ const Post = () => {
                                 />
                                 <div className='mx-6'>
                                     <button
-                                        className={`bg-[#B1DEFC] w-full rounded-lg py-1 text-gray-100 ${checkedIndices.length === 0 ? 'cursor-not-allowed opacity-50' : 'bg-[#1aa0f7] text-white'}`}
+                                        className={`bg-[#B1DEFC] w-full rounded-lg py-1 text-gray-100 ${checkedIndices.length === 0 ? 'cursor-not-allowed opacity-50' : 'bg-blue-400 text-white'}`}
                                         disabled={checkedIndices.length === 0}
                                     >
                                         {checkedIndices.length > 1 ? 'Send Separately' : 'Send'}
@@ -384,6 +431,7 @@ const Post = () => {
                         </div>
                     </div>
                 )}
+
             </div>
         </div>
     );
@@ -434,7 +482,7 @@ const commentData = [
         time: '17m',
         likes: '128',
         reply: 'Reply',
-        likebtn: <TbHeart />,
+        likebtn: <AiOutlineHeart />,
     },
     {
         id: 2,
@@ -444,7 +492,7 @@ const commentData = [
         time: '17m',
         likes: '128',
         reply: 'Reply',
-        likebtn: <TbHeart />,
+        likebtn: <AiOutlineHeart />,
     },
     {
         id: 3,
@@ -454,7 +502,7 @@ const commentData = [
         time: '17m',
         likes: '128',
         reply: 'Reply',
-        likebtn: <TbHeart />,
+        likebtn: <AiOutlineHeart />,
     },
     {
         id: 4,
@@ -464,7 +512,7 @@ const commentData = [
         time: '17m',
         likes: '128',
         reply: 'Reply',
-        likebtn: <TbHeart />,
+        likebtn: <AiOutlineHeart />,
     },
     {
         id: 5,
@@ -474,7 +522,7 @@ const commentData = [
         time: '17m',
         likes: '128',
         reply: 'Reply',
-        likebtn: <TbHeart />,
+        likebtn: <AiOutlineHeart />,
     },
     {
         id: 6,
@@ -484,7 +532,7 @@ const commentData = [
         time: '17m',
         likes: '128',
         reply: 'Reply',
-        likebtn: <TbHeart />,
+        likebtn: <AiOutlineHeart />,
     },
     {
         id: 7,
@@ -494,7 +542,7 @@ const commentData = [
         time: '17m',
         likes: '128',
         reply: 'Reply',
-        likebtn: <TbHeart />,
+        likebtn: <AiOutlineHeart />,
     },
     {
         id: 8,
@@ -504,7 +552,7 @@ const commentData = [
         time: '17m',
         likes: '128',
         reply: 'Reply',
-        likebtn: <TbHeart />,
+        likebtn: <AiOutlineHeart />,
     },
 ]
 
@@ -512,6 +560,7 @@ const commentData = [
 
 const post = [
     {
+        id: 1,
         profileName: 'Le_BackBenchers',
         profilePic: '/padhana.jpg',
         postTime: (
@@ -521,15 +570,16 @@ const post = [
         ),
         prfileNameDots: <HiOutlineDotsHorizontal />,
         postImage: '/padhana.jpg',
-        psotLikeBtn: <TbHeart />,
+        psotLikeBtn: <AiOutlineHeart />,
         postCommentBtn: <TbMessageCircle />,
         psotSendBtn: <FiSend />,
-        postAddToFvrtBtn: <BiBookmark />
+        postAddToFvrtBtn: <FaRegBookmark />
 
     },
     {
+        id: 2,
         profileName: 'Le_BackBenchers',
-        profilePic: '/padhana.jpg',
+        profilePic: '/girl1.webp',
         postTime: (
             <p>
                 15m
@@ -537,13 +587,14 @@ const post = [
         ),
         prfileNameDots: <HiOutlineDotsHorizontal />,
         postImage: '/padhana.jpg',
-        psotLikeBtn: <TbHeart />,
+        psotLikeBtn: <AiOutlineHeart />,
         postCommentBtn: <TbMessageCircle />,
         psotSendBtn: <FiSend />,
-        postAddToFvrtBtn: <BiBookmark />
+        postAddToFvrtBtn: <FaRegBookmark />
 
     },
     {
+        id: 3,
         profileName: 'Le_BackBenchers',
         profilePic: '/padhana.jpg',
         postTime: (
@@ -553,13 +604,14 @@ const post = [
         ),
         prfileNameDots: <HiOutlineDotsHorizontal />,
         postImage: '/padhana.jpg',
-        psotLikeBtn: <TbHeart />,
+        psotLikeBtn: <AiOutlineHeart />,
         postCommentBtn: <TbMessageCircle />,
         psotSendBtn: <FiSend />,
-        postAddToFvrtBtn: <BiBookmark />
+        postAddToFvrtBtn: <FaRegBookmark />
 
     },
     {
+        id: 4,
         profileName: 'Le_BackBenchers',
         profilePic: '/padhana.jpg',
         postTime: (
@@ -569,13 +621,14 @@ const post = [
         ),
         prfileNameDots: <HiOutlineDotsHorizontal />,
         postImage: '/padhana.jpg',
-        psotLikeBtn: <TbHeart />,
+        psotLikeBtn: <AiOutlineHeart />,
         postCommentBtn: <TbMessageCircle />,
         psotSendBtn: <FiSend />,
-        postAddToFvrtBtn: <BiBookmark />
+        postAddToFvrtBtn: <FaRegBookmark />
 
     },
     {
+        id: 5,
         profileName: 'Le_BackBenchers',
         profilePic: '/padhana.jpg',
         postTime: (
@@ -585,10 +638,18 @@ const post = [
         ),
         prfileNameDots: <HiOutlineDotsHorizontal />,
         postImage: '/padhana.jpg',
-        psotLikeBtn: <TbHeart />,
+        psotLikeBtn: <AiOutlineHeart />,
         postCommentBtn: <TbMessageCircle />,
         psotSendBtn: <FiSend />,
-        postAddToFvrtBtn: <BiBookmark />
+        postAddToFvrtBtn: <FaRegBookmark />
 
     },
+]
+
+
+
+const mainCommentData = [
+    {
+
+    }
 ]
