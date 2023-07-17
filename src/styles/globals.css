@@ -24,10 +24,11 @@
 
 
 .sidebar-search {
-  box-shadow: 10px 1px 12px -15px rgba(0,0,0,0.69);
--webkit-box-shadow: 10px 1px 12px -15px rgba(0,0,0,0.69);
--moz-box-shadow: 10px 1px 12px -15px rgba(0,0,0,0.69);
+  box-shadow: 10px 1px 12px -15px rgba(0, 0, 0, 0.69);
+  -webkit-box-shadow: 10px 1px 12px -15px rgba(0, 0, 0, 0.69);
+  -moz-box-shadow: 10px 1px 12px -15px rgba(0, 0, 0, 0.69);
 }
+
 .arrow {
   width: 20px;
   height: 20px;
@@ -133,3 +134,25 @@
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
+
+@keyframes heart {
+  0% {
+    font-size: 1rem;
+  }
+
+  70% {
+    font-size: 6rem;
+  }
+
+  100% {
+    font-size: 5rem;
+  }
+}
+
+.animate-heart {
+  animation: heart 300ms forwards;
+  opacity: 0.9;
+}
+
+

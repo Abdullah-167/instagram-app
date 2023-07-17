@@ -56,7 +56,7 @@ const Post = () => {
             setPostHeart(index)
             setTimeout(() => {
                 setPostHeart(null);
-            }, 1000);
+            }, 700);
         }
     };
 
@@ -158,14 +158,14 @@ const Post = () => {
                                     height={900}
                                     onDoubleClick={() => handlePostLike(index)}
                                 />
-                                {postHeart === index && (
-                                    <div
-                                        className='absolute inset-0 top-0 left-0 flex justify-center items-center text-white text-7xl'
-                                        style={{ animation: 'popupAnimation 1s ease' }}
-                                    >
-                                        <AiFillHeart />
-                                    </div>
-                                )}
+                                <div className={`  ${postHeart === index ? 'animate-heart' : ''}  `} >
+                                    {postHeart === index && (
+                                        <div
+                                            className='absolute inset-0 top-0 left-0 flex justify-center items-center text-white ' >
+                                            <AiFillHeart />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <div className='flex text-3xl justify-between font-[100]'>
                                 <div className='flex gap-2 items-center'>
@@ -195,9 +195,7 @@ const Post = () => {
                     );
                 })}
 
-
                 {/* Post Options Modale */}
-
 
                 {open && (
                     <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-[1000]`}>

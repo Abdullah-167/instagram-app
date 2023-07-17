@@ -55,7 +55,7 @@ const Sidebar = () => {
 
   return (
     <div className='max-w-[245px] min-w-[245px] z-[1000] bg-white'>
-      <div className={` border-r border-r-gray-300 z-[1000] sticky top-0 pr-2 transition-all duration-500 ${textVisible ? 'max-w-[80px] min-w-[80px]' : 'max-w-[245px] min-w-[245px]'} `} style={{ height: '100vh' }}>
+      <div className={` border-r border-r-gray-300 z-[1000] sticky left-0 top-0 pr-2 transition-all duration-500 ${textVisible ? 'max-w-[80px] min-w-[80px]' : 'max-w-[245px] min-w-[245px]'} `} style={{ height: '100vh' }}>
         <div className='py-8 h-full  z-[1000]'>
           <div className={`flex z-[100]  ${textVisible ? ' mb-[29px] pl-6' : 'pl-6 mb-6'}`}>
             {textVisible ? (
