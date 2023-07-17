@@ -21,6 +21,7 @@ const Post = () => {
     const [postBookMark, setPostBookMark] = useState<number[]>([]);
     const [innerCommentMark, setInnerCommentMark] = useState(false)
     const [searchText, setSearchText] = useState('');
+    const [postHeart, setPostHeart] = useState(null);
 
     const handleDivClick = (index: any) => {
         if (checkedIndices.includes(index)) {
@@ -47,11 +48,15 @@ const Post = () => {
     };
 
 
-    const handlePostLike = (index: number) => {
+    const handlePostLike = (index: any) => {
         if (likedPosts.includes(index)) {
             setLikedPosts(likedPosts.filter((likedIndex) => likedIndex !== index));
         } else {
             setLikedPosts([...likedPosts, index]);
+            setPostHeart(index)
+            setTimeout(() => {
+                setPostHeart(null);
+            }, 1000);
         }
     };
 
@@ -96,7 +101,6 @@ const Post = () => {
         setInnerCommentMark(!innerCommentMark)
     }
 
-
     useEffect(() => {
         if (open) {
             document.body.classList.add('modal-open');
@@ -130,10 +134,9 @@ const Post = () => {
             <div className='relative  max-w-[470px] mx-auto py-10'>
 
                 {/* Main Post */}
-
                 {post.map((item, index) => {
                     return (
-                        <div className='py-7' key={index} >
+                        <div className='py-7' key={index}>
                             <div className='flex items-center justify-between'>
                                 <div className='flex gap-1.5 items-center'>
                                     <Image className='rounded-full' src={item.profilePic} alt={'post-img'} width={35} height={35} />
@@ -146,8 +149,23 @@ const Post = () => {
                                     {item.prfileNameDots}
                                 </div>
                             </div>
-                            <div className='pb-5'>
-                                <Image className=' rounded-sm pt-5' src={item.postImage} alt={'post-image'} width={800} height={900} />
+                            <div className='pb-5 relative'>
+                                <Image
+                                    className='rounded-sm pt-5'
+                                    src={item.postImage}
+                                    alt={'post-image'}
+                                    width={800}
+                                    height={900}
+                                    onDoubleClick={() => handlePostLike(index)}
+                                />
+                                {postHeart === index && (
+                                    <div
+                                        className='absolute inset-0 top-0 left-0 flex justify-center items-center text-white text-7xl'
+                                        style={{ animation: 'popupAnimation 1s ease' }}
+                                    >
+                                        <AiFillHeart />
+                                    </div>
+                                )}
                             </div>
                             <div className='flex text-3xl justify-between font-[100]'>
                                 <div className='flex gap-2 items-center'>
@@ -157,18 +175,16 @@ const Post = () => {
                                     >
                                         {likedPosts.includes(index) ? <AiFillHeart /> : item.psotLikeBtn}
                                     </span>
-                                    <span className='cursor-pointer  hover:text-gray-400'
-                                        onClick={() => handleCommentBox()}
-                                    >
+                                    <span className='cursor-pointer hover:text-gray-400' onClick={() => handleCommentBox()}>
                                         {item.postCommentBtn}
                                     </span>
-                                    <span
-                                        onClick={() => handleSendPost(item.id)}
-                                        className=' cursor-pointer  hover:text-gray-400'> {item.psotSendBtn}
+                                    <span onClick={() => handleSendPost(item.id)} className='cursor-pointer hover:text-gray-400'>
+                                        {item.psotSendBtn}
                                     </span>
                                 </div>
                                 <div>
-                                    <span className={`cursor-pointer ${postBookMark.includes(index) ? '' : 'hover:text-gray-400'}`}
+                                    <span
+                                        className={`cursor-pointer ${postBookMark.includes(index) ? '' : 'hover:text-gray-400'}`}
                                         onClick={() => handlePostBookMatk(index)}
                                     >
                                         {postBookMark.includes(index) ? <FaBookmark /> : item.postAddToFvrtBtn}
@@ -176,7 +192,7 @@ const Post = () => {
                                 </div>
                             </div>
                         </div>
-                    )
+                    );
                 })}
 
 
@@ -216,7 +232,7 @@ const Post = () => {
 
 
                 {commentbox && (
-                    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-20">
+                    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 ">
                         <div className='flex items-center'>
                             <div className='pb-5 max-w-[550px]'>
                                 <div>

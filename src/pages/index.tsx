@@ -1,6 +1,6 @@
-import Index from "@/Components/Home/Index";
-import RightBar from "@/Components/Home/RightBar";
-import Sidebar from "@/Components/Home/Sidebar";
+import Index from "@/Components/Views/Home/Index";
+import RightBar from "@/Components/Views/Home/RightBar";
+import Sidebar from "@/Components/Views/Home/Sidebar";
 
 export default function Home() {
   return (

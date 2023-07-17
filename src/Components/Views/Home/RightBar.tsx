@@ -1,15 +1,5 @@
 import Image from 'next/image'
 import React, { useState, useRef } from 'react'
-import { GrHomeRounded } from 'react-icons/gr';
-import { BsSearch, BsClockHistory, BsBookmark, BsPlayCircle } from 'react-icons/bs';
-import { AiOutlineCompass } from 'react-icons/ai';
-import { VscDiffAdded } from 'react-icons/vsc';
-import { CgProfile } from 'react-icons/cg';
-import { SlMenu } from 'react-icons/sl';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { GoReport } from 'react-icons/go';
-import { FaFacebookMessenger, FaRegHeart } from 'react-icons/fa';
-import useOutsideClick from '../Hooks/useOutsideClick';
 
 const RightBar = () => {
 
@@ -24,7 +14,6 @@ const RightBar = () => {
         setMenuOpen(false);
     };
 
-    useOutsideClick(menuRef, handleCloseMenu);
 
     return (
         <div className='min-w-[322px] max-w-[322px] pt-14'>

@@ -21,7 +21,7 @@ const Stories = () => {
   });
 
   return (
-    <div className=" pt-10 z-0">
+    <div className=" pt-10">
       <div ref={sliderRef} className="keen-slider">
         <div className="flex justify-center gap-2 px-4">
           {storyData.map((item, index) => {

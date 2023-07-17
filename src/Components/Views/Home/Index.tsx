@@ -6,7 +6,7 @@ import Home from './Home'
 const Index = () => {
     return (
         <div className='flex'>
-            <div className="max-w-[700px] overflow-hidden mt-5">
+            <div className="max-w-[700px]  mt-5">
                 <Home />
             </div>
         </div>

@@ -3,8 +3,9 @@ import Sidebar from '../Home/Sidebar'
 import UserInformation from './UserInformation'
 
 const Index = () => {
+    
     return (
-        <div className='grid'>
+        <div className='flex justify-center w-full'>
             <Sidebar />
             <UserInformation />
         </div>
