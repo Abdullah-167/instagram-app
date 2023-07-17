@@ -34,7 +34,7 @@ const Notifications = ({ openNotification }: any) => {
             <p className="text-sm font-bold px-3.5 pb-5">This week</p>
             {data.map((item, index) => {
                 return (
-                    <div className='flex justify-between items-center pb-3 px-3' key={index}>
+                    <div className='flex justify-between items-center pb-5 px-3' key={index}>
                         <div className='flex gap-3 '>
                             <div>
                                 <Image className='rounded-full' src={item.img} alt={'Padhana'} width={45} height={45} />
