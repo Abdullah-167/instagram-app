@@ -120,6 +120,32 @@ const Reels = () => {
         setInnerCommentMark(!innerCommentMark)
     }
 
+    useEffect(() => {
+        if (open) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+    }, [open]);
+
+
+    useEffect(() => {
+        if (commentbox) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+    }, [commentbox]);
+
+
+    useEffect(() => {
+        if (sendPstTo) {
+            document.body.classList.add('modal-open')
+        } else {
+            document.body.classList.remove('modal-open')
+
+        }
+    }, [sendPstTo])
 
 
     return (
@@ -236,14 +262,9 @@ const Reels = () => {
 
 
                 {commentbox && (
-                    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 ">
+                    <div className="fixed top-0 left-[80px] w-full  mx-auto h-full flex items-center justify-center z-[600]">
                         <div className='flex items-center'>
-                            <div className='pb-5 max-w-[550px]'>
-                                <div>
-                                    <Image className='min-h-[519px] max-h-[519px] object-cover rounded-sm pt-5' src={'/padhana.jpg'} alt={''} width={550} height={900} />
-                                </div>
-                            </div>
-                            <div className="bg-white shadow-2xl min-w-[300px] max-w-[500px] w-full py-3 min-h-[490px] rounded-r-xl">
+                            <div className="bg-white shadow-2xl min-w-[300px] max-w-[350px] w-full py-3 min-h-[262px] rounded-r-xl">
                                 <div className='flex justify-end'>
                                     <span className='text-2xl px-3 cursor-pointer'
                                         onClick={() => setSommentbox(false)}
@@ -252,25 +273,8 @@ const Reels = () => {
                                     </span>
                                 </div>
                                 <div className=" py-2">
-                                    <div className="px-4">
-                                        <div>
-                                            <div className='flex items-center justify-between mb-6'>
-                                                <div className='flex gap-1.5 items-center'>
-                                                    <Image className='rounded-full' src={'/padhana.jpg'} alt={'post-img'} width={45} height={45} />
-                                                    <div>
-                                                        <h2 className='pl-1.5 font-semibold cursor-pointer pb-0'>Le_Backbenchers</h2>
-                                                        <span className='text-[12px] px-1.5'>Original Audio</span>
-                                                    </div>
-                                                </div>
-                                                <div className='cursor-pointer hover:text-gray-400' onClick={() => handleOpenTwo()}>
-                                                    <HiOutlineDotsHorizontal />
-                                                </div>
-                                            </div>
 
-                                        </div>
-
-                                    </div>
-                                    <div className='py-4 mb-2 items-center min-h-[250px] max-h-[250px] border-t border-b border-t-gray-200 border-b-gray-200 overflow-auto'
+                                    <div className='py-4 mb-2 items-center min-h-[150px] max-h-[150px] overflow-auto'
                                         style={{
                                             scrollbarWidth: 'none'
                                         }}
@@ -333,7 +337,7 @@ const Reels = () => {
                                         </span>
                                         <span>
                                             <input
-                                                className='outline-none max-w-full w-[400px] px-1 py-1 text-sm'
+                                                className='outline-none max-w-full w-full px-1 py-1 text-sm'
                                                 placeholder='Add A Comment'
                                                 type='text'
                                                 value={commentText}
@@ -358,13 +362,12 @@ const Reels = () => {
                     </div>
                 )}
 
-
                 {/* Send Post To Modale */}
 
                 {sendPstTo && (
-                    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-20">
-                        <div className="bg-white shadow-2xl min-w-[300px] max-w-[500px] w-full py-3 rounded-xl relative">
-                            <div className='grid grid-cols-3 place-items-center gap-40'>
+                    <div className="fixed top-0 left-[90px] w-full h-full flex items-center justify-center">
+                        <div className="bg-white shadow-2xl min-w-[300px] max-w-[350px] w-full py-3 rounded-xl relative">
+                            <div className='grid grid-cols-3 place-items-center gap-28'>
                                 <span></span>
                                 <span className='text-xl font-semibold'>
                                     Share
@@ -400,7 +403,7 @@ const Reels = () => {
                                         })}
                                     </div>
                                 </div>
-                                <div className='py-4 mb-2 items-center min-h-[300px] max-h-[300px] border-t border-b border-t-gray-200 border-b-gray-200 overflow-auto'
+                                <div className='py-4 mb-2 items-center min-h-[150px] max-h-[150px] border-t border-b border-t-gray-200 border-b-gray-200 overflow-auto'
                                     style={{
                                         scrollbarWidth: 'none'
                                     }}
