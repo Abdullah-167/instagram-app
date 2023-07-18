@@ -156,3 +156,29 @@
 }
 
 
+.child {
+  scroll-snap-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.4em;
+  padding: 1.25em;
+}
+
+.parent {
+  --scroll-gap: 2em;
+  height: 100vh;
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-right: calc(var(--scroll-gap) + 17px);
+
+  /* Ensure content snaps to the scroll snap points */
+  scroll-padding-right: var(--scroll-gap);
+}
+
+.parent::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
+}

@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { FiSend } from 'react-icons/fi';
 import { TbMessageCircle } from 'react-icons/tb';
 import { RxCross2 } from 'react-icons/rx';
 import { GrEmoji } from 'react-icons/gr';
-import { PiSpeakerSimpleHighFill, PiSpeakerSimpleXFill } from 'react-icons/pi';
+import { HiSpeakerXMark, HiSpeakerWave } from 'react-icons/hi2';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 const Reels = () => {
@@ -24,6 +24,7 @@ const Reels = () => {
     const [searchText, setSearchText] = useState('');
     const [postHeart, setPostHeart] = useState(null);
     const [isSoundMuted, setIsSoundMuted] = useState<number[]>([]);
+    const [currentVideoIndex, setCurrentVideoIndex] = useState<number[]>([]);
 
     const handleDivClick = (index: any) => {
         if (checkedIndices.includes(index)) {
@@ -54,6 +55,14 @@ const Reels = () => {
             setIsSoundMuted(isSoundMuted.filter((newSound) => newSound !== index))
         } else {
             setIsSoundMuted([...isSoundMuted, index])
+        }
+    };
+
+    const handleVideo = (index: any) => {
+        if (currentVideoIndex.includes(index)) {
+            setCurrentVideoIndex(currentVideoIndex.filter((newSound) => newSound !== index))
+        } else {
+            setCurrentVideoIndex([...currentVideoIndex, index])
         }
     };
 
@@ -111,62 +120,38 @@ const Reels = () => {
         setInnerCommentMark(!innerCommentMark)
     }
 
-    useEffect(() => {
-        if (open) {
-            document.body.classList.add('modal-open');
-        } else {
-            document.body.classList.remove('modal-open');
-        }
-    }, [open]);
-
-
-    useEffect(() => {
-        if (commentbox) {
-            document.body.classList.add('modal-open');
-        } else {
-            document.body.classList.remove('modal-open');
-        }
-    }, [commentbox]);
-
-
-    useEffect(() => {
-        if (sendPstTo) {
-            document.body.classList.add('modal-open')
-        } else {
-            document.body.classList.remove('modal-open')
-
-        }
-    }, [sendPstTo])
 
 
     return (
-        <div className='max-w-[350px] mx-auto '>
+        <div className=' mx-auto '>
             <div className='relative  py-10'>
 
                 {/* Main Post */}
 
-
-                <div className="reels-container overflow-y-scroll">
+                <div className="parent">
                     {post.map((item, index) => {
                         return (
-                            <div className="reel py-7 relative scroll-snap-align-start" key={index}>
+                            <div className="py-7 relative" key={index}>
                                 <div className='absolute bottom-20 left-5 z-[1000] '>
                                     <div className='flex items-center justify-between'>
                                         <div className=' flex gap-1.5 items-center'>
-                                            <Image className='rounded-full' src={item.profilePic} alt={'post-img'} width={35} height={35} />
+                                            <Image className='rounded-full object-cover max-w-[35px] min-w-[35px] max-h-[35px] min-h-[35px]' src={item.profilePic} alt={'post-img'} width={35} height={35} />
                                             <h2 className='pl-1.5 text-sm font-semibold cursor-pointer text-white'>{item.profileName}</h2>
                                             <span className='text-xs text-white mx-3 rounded-lg py-2 font-bold cursor-pointer'>Follow</span>
                                         </div>
 
                                     </div>
                                 </div>
-                                <div className='flex gap-4'>
+                                <div className='child  gap-4'>
                                     <div className='pb-5 relative rounded-lg'>
                                         <video
                                             className='pt-5 shadow-lg min-h-[500px] max-h-[550px] object-cover rounded-lg'
                                             controls
                                             src={item.postVideo}
                                             muted={isSoundMuted.includes(index)}
+                                            autoplay={currentVideoIndex.includes(index)}
+                                            onPlay={() => handleVideo(index)}
+                                            onPause={() => handleVideo(null)}
                                         ></video>
                                         {postHeart === index && (
                                             <div
@@ -178,9 +163,9 @@ const Reels = () => {
                                         )}
                                         <div className='text-sm absolute top-10 right-6 text-white cursor-pointer bg-[#bebebe] bg-opacity-40 p-1.5 rounded-full max-w-[25px]'>
                                             {isSoundMuted.includes(index) ? (
-                                                <PiSpeakerSimpleXFill onClick={() => handleSound(index)} />
+                                                <HiSpeakerXMark onClick={() => handleSound(index)} />
                                             ) : (
-                                                <PiSpeakerSimpleHighFill onClick={() => handleSound(index)} />
+                                                <HiSpeakerWave onClick={() => handleSound(index)} />
                                             )}
                                         </div>
 
