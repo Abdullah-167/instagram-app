@@ -162,7 +162,7 @@ const data = [
     icon: <BsPlayCircle />,
   },
   {
-    link: '/messages',
+    link: '/chat',
     text: 'Messages',
     icon: <FaFacebookMessenger />,
   },

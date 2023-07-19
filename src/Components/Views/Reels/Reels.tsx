@@ -175,7 +175,6 @@ const Reels = () => {
                                             controls
                                             src={item.postVideo}
                                             muted={isSoundMuted.includes(index)}
-                                            autoplay={currentVideoIndex.includes(index)}
                                             onPlay={() => handleVideo(index)}
                                             onPause={() => handleVideo(null)}
                                         ></video>
