@@ -82,7 +82,7 @@ const Index = () => {
                                 onClick={toggleShowPassword}
                                 type='button'
                             >
-                                {showPassword ? <IoEyeOff size={16} /> : <IoEye size={16} />}asd
+                                {showPassword ? <IoEyeOff size={16} /> : <IoEye size={16} />}
                             </button>
                         </div>
                         <div className='px-10 pb-4'>
