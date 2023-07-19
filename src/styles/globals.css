@@ -157,7 +157,7 @@
 
 
 .child {
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,8 +173,6 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding-right: calc(var(--scroll-gap) + 17px);
-
-  /* Ensure content snaps to the scroll snap points */
   scroll-padding-right: var(--scroll-gap);
 }
 
