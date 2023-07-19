@@ -26,13 +26,13 @@ const Index = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentImageIndex((currentImageIndex + 1) % data.length);
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % data.length);
         }, 5000);
 
         return () => {
             clearInterval(interval);
         };
-    }, [currentImageIndex, data.length]);
+    }, []);
 
 
     return (
@@ -108,7 +108,7 @@ const Index = () => {
                             <span className="cursor-pointer">Forgot password?</span>
                         </p>                    </div>
                     <div className='flex gap-1 justify-center text-sm border py-4 border-gray-300 max-w-[350px] min-w-[350px] mb-4'>
-                        <span>Don't have an account?</span>
+                        <span>{`Don't have an account?`}</span>
                         <Link href={'/signup'}>  <span className='text-[#4BB4F8] font-semibold cursor-pointer'>Sign up</span> </Link>
                     </div>
                     <p className='text-[16px] font-medium text-center pb-4'>Get the app.</p>

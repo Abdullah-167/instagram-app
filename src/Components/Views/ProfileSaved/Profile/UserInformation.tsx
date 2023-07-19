@@ -11,7 +11,7 @@ import { FiSend } from 'react-icons/fi';
 import { TbMessageCircle } from 'react-icons/tb';
 import { RxCross2 } from 'react-icons/rx';
 import { GrEmoji } from 'react-icons/gr';
-import { PiIdentificationBadgeLight } from 'react-icons/pi';
+import { HiOutlineIdentification } from 'react-icons/hi';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Link from 'next/link';
 
@@ -169,7 +169,7 @@ const UserInformation = () => {
                                 <p className='font-medium text-gray-500 text-sm'>Web Designer</p>
                                 <p className='font-[500] pl-[70px] text-sm'>💖💫فَبِاَىِّ اٰلَاۤءِ رَبِّكُمَا تُكَذِّبٰن</p>
                                 <p className='font-[500] pl-[152px] text-sm'>🏴✋یا علی</p>
-                                <p className='font-[500] text-sm'>Merci d'avoir priorisé mes mots🍂🤞</p>
+                                <p className='font-[500] text-sm'>{`Merci d'avoir priorisé mes mots🍂🤞`}</p>
                             </div>
                         </div>
                     </div>
@@ -202,7 +202,7 @@ const UserInformation = () => {
                 </Link>
                 <Link href={'/profiletagged'}>
                     <div className='flex gap-2 items-center cursor-pointer text-gray-400 pt-5'>
-                        <span><PiIdentificationBadgeLight /></span>
+                        <span><HiOutlineIdentification /></span>
                         <span>Tagged</span>
                     </div>
                 </Link>

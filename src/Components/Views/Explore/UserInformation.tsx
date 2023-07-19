@@ -11,7 +11,7 @@ import { FiSend } from 'react-icons/fi';
 import { TbMessageCircle } from 'react-icons/tb';
 import { RxCross2 } from 'react-icons/rx';
 import { GrEmoji } from 'react-icons/gr';
-import { PiIdentificationBadgeLight } from 'react-icons/pi';
+import { HiOutlineIdentification } from 'react-icons/hi';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import Link from 'next/link';
 
