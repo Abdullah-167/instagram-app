@@ -3,7 +3,7 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { TbEdit } from 'react-icons/tb';
 import Image from 'next/image'
 
-const Profiles = () => {
+const Profiles = ({ onProfileClick }: any) => {
 
     const [text, setText] = useState(0);
     const [searchText, setSearchText] = useState('')
@@ -15,6 +15,11 @@ const Profiles = () => {
     const handleProfileSearch = (e: any) => {
         setSearchText(e.target.value)
     }
+
+    const handleProfileClick = (profile: any) => {
+        onProfileClick(profile);
+    };
+
 
     return (
         <div>
@@ -47,11 +52,13 @@ const Profiles = () => {
                     </div>
                     {text === 0 && (
                         <div className='pt-6 mt-[15px] border-t border-t-gray-300'>
-                            {data.filter((item) => 
+                            {data.filter((item) =>
                                 item.name.toLowerCase().includes(searchText.toLowerCase())
                             ).map((item, index) => {
                                 return (
-                                    <div className='flex justify-between items-center pb-5 px-3 cursor-pointer' key={index}>
+                                    <div className='flex justify-between items-center pb-5 px-3 cursor-pointer' key={index}
+                                        onClick={() => handleProfileClick(item)}
+                                    >
                                         <div className='flex gap-3 '>
                                             <div>
                                                 <Image className='rounded-full' src={item.img} alt={'Padhana'} width={50} height={50} />
@@ -87,7 +94,7 @@ export default Profiles
 const data = [
     {
         img: '/padhana.jpg',
-        name: 'oy_itx_padhana',
+        name: 'Abdullah',
         follow: 'Follow',
         message: 'You sent a message',
     },

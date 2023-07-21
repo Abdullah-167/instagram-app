@@ -8,22 +8,17 @@ import { GrMicrophone } from 'react-icons/gr';
 import { FiImage } from 'react-icons/fi';
 import { AiOutlineHeart } from 'react-icons/ai';
 
-const InChat = () => {
+const InChat = ({ profile }: any) => {
     const [message, setMessage] = useState('');
     const [sentMessages, setSentMessages] = useState([]);
     const [recording, setRecording] = useState(false);
+    const [messageHistory, setMessageHistory] = useState({ [profile.name]: [] });
     const recorderRef = useRef(null);
 
     const handleMessage = (e) => {
         setMessage(e.target.value);
     };
 
-    const handleSendMessage = () => {
-        if (message.trim() !== '') {
-            setSentMessages([...sentMessages, { message }]);
-            setMessage('');
-        }
-    };
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
@@ -69,6 +64,18 @@ const InChat = () => {
     };
 
 
+    const handleSendMessage = () => {
+        if (message.trim() !== '') {
+            setMessageHistory((prevHistory) => ({
+                ...prevHistory,
+                [profile.name]: [...(prevHistory[profile.name] || []), { message }],
+            }));
+            setMessage('');
+        }
+    };
+
+
+
     const messageContainerRef = useRef(null);
 
     useEffect(() => {
@@ -79,7 +86,7 @@ const InChat = () => {
             }
         };
         scrollToBottom();
-    }, [sentMessages]);
+    }, [messageHistory, profile.name]);
 
     return (
         <div className='w-full'>
@@ -87,11 +94,9 @@ const InChat = () => {
                 <div className='flex justify-between items-center cursor-pointer'>
                     <div className='flex gap-3 items-center'>
                         <div>
-                            <Image className='rounded-full' src={'/padhana.jpg'} alt={'Padhana'} width={50} height={50} />
+                            <Image className='rounded-full' src={profile.img} alt={profile.name} width={50} height={50} />
                         </div>
-                        <div>
-                            <h3 className='text-[16px] pt-1 font-semibold'>oy_itx_padhana</h3>
-                        </div>
+                        <h3 className='text-[16px] pt-1 font-semibold'>{profile.name}</h3>
                     </div>
                 </div>
                 <div className='flex gap-5 text-2xl items-center'>
@@ -107,17 +112,13 @@ const InChat = () => {
                 </div>
             </div>
             <div className='min-h-[400px] max-h-[400px] overflow-auto my-4' ref={messageContainerRef}>
-                {sentMessages.length === 0 ? (
+                {messageHistory[profile.name]?.length === profile.name ? (
                     <p>No messages found.</p>
                 ) : (
-                    sentMessages.map((msg, index) => (
+                    messageHistory[profile.name]?.map((msg, index) => (
                         <div key={index}>
                             {msg.message && <p>{msg.message}</p>}
-                            {msg.audio && (
-                                <div>
-                                    <audio src={URL.createObjectURL(msg.audio)} controls />
-                                </div>
-                            )}
+
                         </div>
                     ))
                 )}

@@ -37,19 +37,19 @@ const Post = () => {
 
     const modalRef = useRef(null);
 
-    useEffect(() => {
-        const handleOutsideClick = (event: MouseEvent) => {
-            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-                handleCommentBox();
-            }
-        };
+    // useEffect(() => {
+    //     const handleOutsideClick = (event: MouseEvent) => {
+    //         if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+    //             handleCommentBox();
+    //         }
+    //     };
 
-        document.addEventListener('mousedown', handleOutsideClick);
+    //     document.addEventListener('mousedown', handleOutsideClick);
 
-        return () => {
-            document.removeEventListener('mousedown', handleOutsideClick);
-        };
-    }, []);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleOutsideClick);
+    //     };
+    // }, []);
 
 
     const handleOpen = (id: any) => {

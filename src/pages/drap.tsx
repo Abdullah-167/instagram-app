@@ -10,28 +10,29 @@ const DragAndDropPage = () => {
     const [draggedCardIndex, setDraggedCardIndex] = useState(null);
     const [tiltCards, setTiltCards] = useState([]); // Add state to store the names of tilted cards
     const [draggedCardPosition, setDraggedCardPosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
 
-const handleDragStart = (event, listId, cardIndex) => {
-  event.dataTransfer.effectAllowed = 'move'; // Set the effectAllowed property to 'move' to remove the default drag image
-  event.dataTransfer.setData('text/plain', ''); // Remove the text data to disable the default drag image
 
-  // Instead of setting the draggedCardIndex, store the entire card data
-  const draggedCardData = {
-    listId,
-    cardIndex,
-    cardData: lists.find((list) => list.id === listId).cards[cardIndex],
-  };
-  event.dataTransfer.setData('application/json', JSON.stringify(draggedCardData));
+    const handleDragStart = (event, listId, cardIndex) => {
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/plain', '');
 
-  // Add the card name to the tiltCards state when starting to drag
-  const cardName = lists.find((list) => list.id === listId).cards[cardIndex];
-  setTiltCards([...tiltCards, cardName]);
-  const cardRect = event.currentTarget.getBoundingClientRect();
-  setDraggedCardPosition({ x: event.clientX - cardRect.left, y: event.clientY - cardRect.top });
-};
+        const draggedCardData = {
+            listId,
+            cardIndex,
+            cardData: lists.find((list) => list.id === listId).cards[cardIndex],
+        };
+        event.dataTransfer.setData('application/json', JSON.stringify(draggedCardData));
 
+        const cardName = lists.find((list) => list.id === listId).cards[cardIndex];
+        setTiltCards([...tiltCards, cardName]);
+        setIsDragging(true); // Set isDragging to true when starting to drag
+        const cardRect = event.currentTarget.getBoundingClientRect();
+        setDraggedCardPosition({ x: event.clientX - cardRect.left, y: event.clientY - cardRect.top });
+    };
 
     const handleDragEnd = () => {
+        setIsDragging(false); // Set isDragging back to false when the drag ends
         setDraggedCardIndex(null);
         setTiltCards([]);
     };
@@ -101,9 +102,9 @@ const handleDragStart = (event, listId, cardIndex) => {
 
     const handleDrag = (event) => {
         event.preventDefault();
-      };
+    };
 
-    
+
 
     const handleListTitleChange = (listId) => {
         const newTitle = prompt('Enter new list title:');
@@ -150,7 +151,8 @@ const handleDragStart = (event, listId, cardIndex) => {
                                     position: draggedCardIndex === index ? 'absolute' : 'static',
                                     left: draggedCardIndex === index ? draggedCardPosition.x + 'px' : 'auto',
                                     top: draggedCardIndex === index ? draggedCardPosition.y + 'px' : 'auto',
-                                    transform: `rotate(${tiltCards.includes(card) ? '3deg' : '0'}) scale(${tiltCards.includes(card) ? '1.05' : '1'})`,
+                                    transform: `rotate(${isDragging && tiltCards.includes(card) ? '3deg' : '0'}) scale(${tiltCards.includes(card) ? '1' : '1'
+                                        })`,
                                 }}
                                 onClick={() => handleTiltCard(card)}
                             >
@@ -163,52 +165,52 @@ const handleDragStart = (event, listId, cardIndex) => {
                 </div>
             ))}
             <style jsx>{`
-        .board {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 20px;
-          margin: 20px;
-        }
+            .board {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px;
+            }
 
-        .list {
-          width: 250px;
-          padding: 10px;
-          background-color: #f7f7f7;
-          border-radius: 4px;
-        }
+            .list {
+            width: 250px;
+            padding: 10px;
+            background-color: #f7f7f7;
+            border-radius: 4px;
+            }
 
-        .list-title {
-          font-weight: bold;
-          margin-bottom: 10px;
-          cursor: pointer;
-        }
+            .list-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            cursor: pointer;
+            }
 
-        .card {
-          background-color: #007bff;
-          color: #fff;
-          padding: 10px;
-          margin-bottom: 8px;
-          cursor: pointer;
-          user-select: none;
-          border-radius:10px;
-          position: absolute;
+            .card {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            user-select: none;
+            border-radius:10px;
+            position: absolute;
 
-                }
+                    }
 
-        
-        .cards-container {
-            transform-origin: top right;
-            transform: ${draggedCardIndex !== null ? 'rotate(3deg) scale(1.05)' : 'none'};
-          }
+            
+            .cards-container {
+                transform-origin: top right;
+                transform: ${draggedCardIndex !== null ? 'rotate(3deg) scale(1.05)' : 'none'};
+            }
 
-        .card:hover {
-          opacity: 0.8;
-        }
+            .card:hover {
+            opacity: 0.8;
+            }
 
-        button {
-          margin-top: 4px;
-        }
-      `}</style>
+            button {
+            margin-top: 4px;
+            }
+        `}</style>
         </div>
     );
 };
