@@ -47,7 +47,7 @@ const Profiles = () => {
                     </div>
                     {text === 0 && (
                         <div className='pt-6 mt-[15px] border-t border-t-gray-300'>
-                            {data.filter((item) =>
+                            {data.filter((item) => 
                                 item.name.toLowerCase().includes(searchText.toLowerCase())
                             ).map((item, index) => {
                                 return (
@@ -72,6 +72,7 @@ const Profiles = () => {
                                 No messages found.
                             </p>
                         </div>
+
                     )}
                 </div>
             </div>

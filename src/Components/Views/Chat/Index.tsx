@@ -5,6 +5,7 @@ import Messages from './Messages'
 import InChat from './InChat'
 
 const Index = () => {
+    
     return (
         <div className='flex'>
             <Sidebar />

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import { FiSend } from 'react-icons/fi';
@@ -34,6 +34,23 @@ const Post = () => {
     const handleCommentBox = () => {
         setSommentbox(!commentbox)
     }
+
+    const modalRef = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (event: MouseEvent) => {
+            if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+                handleCommentBox();
+            }
+        };
+
+        document.addEventListener('mousedown', handleOutsideClick);
+
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, []);
+
 
     const handleOpen = (id: any) => {
         setOpen(id);
@@ -139,7 +156,7 @@ const Post = () => {
                         <div className='py-7' key={index}>
                             <div className='flex items-center justify-between'>
                                 <div className='flex gap-1.5 items-center'>
-                                    <Image className='rounded-full' src={item.profilePic} alt={'post-img'} width={35} height={35} />
+                                    <Image className='rounded-full min-w-[40px] max-w-[40px] object-cover overflow-auto min-h-[40px]' src={item.profilePic} alt={'post-img'} width={40} height={40} />
                                     <h2 className='pl-1.5 font-semibold cursor-pointer'>{item.profileName}</h2>
                                     <p className='flex items-center text-sm gap-x-1.5 text-gray-500'>
                                         {item.postTime}
@@ -230,7 +247,9 @@ const Post = () => {
 
 
                 {commentbox && (
-                    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 ">
+                    <div className="fixed top-0 z-[1000] left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 "
+                        ref={modalRef}
+                    >
                         <div className='flex items-center'>
                             <div className='pb-5 max-w-[550px]'>
                                 <div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { BsTelephone } from 'react-icons/bs';
 import { AiOutlineVideoCamera } from 'react-icons/ai';
@@ -20,7 +20,7 @@ const InChat = () => {
 
     const handleSendMessage = () => {
         if (message.trim() !== '') {
-            setSentMessages((prevMessages) => [...prevMessages, { message }]);
+            setSentMessages([...sentMessages, { message }]);
             setMessage('');
         }
     };
@@ -68,6 +68,19 @@ const InChat = () => {
         }
     };
 
+
+    const messageContainerRef = useRef(null);
+
+    useEffect(() => {
+        // Function to scroll to the bottom of the container
+        const scrollToBottom = () => {
+            if (messageContainerRef.current) {
+                messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+            }
+        };
+        scrollToBottom();
+    }, [sentMessages]);
+
     return (
         <div className='w-full'>
             <div className='flex justify-between items-center py-4 px-6 border-b border-b-gray-300'>
@@ -93,7 +106,7 @@ const InChat = () => {
                     </span>
                 </div>
             </div>
-            <div className='min-h-[400px] max-h-[400px] overflow-auto my-4'>
+            <div className='min-h-[400px] max-h-[400px] overflow-auto my-4' ref={messageContainerRef}>
                 {sentMessages.length === 0 ? (
                     <p>No messages found.</p>
                 ) : (
