@@ -10,13 +10,22 @@ import { AiOutlineHeart } from 'react-icons/ai';
 
 const InChat = ({ profile }: any) => {
     const [message, setMessage] = useState('');
-    const [sentMessages, setSentMessages] = useState([]);
-    const [recording, setRecording] = useState(false);
     const [messageHistory, setMessageHistory] = useState({ [profile.name]: [] });
+    const [recording, setRecording] = useState(false);
     const recorderRef = useRef(null);
 
     const handleMessage = (e) => {
         setMessage(e.target.value);
+    };
+
+    const handleSendMessage = () => {
+        if (message.trim() !== '') {
+            setMessageHistory((prevHistory) => ({
+                ...prevHistory,
+                [profile.name]: [...(prevHistory[profile.name] || []), { message }],
+            }));
+            setMessage('');
+        }
     };
 
 
@@ -64,18 +73,6 @@ const InChat = ({ profile }: any) => {
     };
 
 
-    const handleSendMessage = () => {
-        if (message.trim() !== '') {
-            setMessageHistory((prevHistory) => ({
-                ...prevHistory,
-                [profile.name]: [...(prevHistory[profile.name] || []), { message }],
-            }));
-            setMessage('');
-        }
-    };
-
-
-
     const messageContainerRef = useRef(null);
 
     useEffect(() => {
@@ -94,9 +91,11 @@ const InChat = ({ profile }: any) => {
                 <div className='flex justify-between items-center cursor-pointer'>
                     <div className='flex gap-3 items-center'>
                         <div>
-                            <Image className='rounded-full' src={profile.img} alt={profile.name} width={50} height={50} />
+                            <Image className='rounded-full object-cover max-w-[50px] min-w-[50px] max-h-[50px] min-h-[50px]' src={profile.img} alt={'Padhana'} width={50} height={50} />
                         </div>
-                        <h3 className='text-[16px] pt-1 font-semibold'>{profile.name}</h3>
+                        <div>
+                            <h3 className='text-[16px] pt-1 font-semibold'>{profile.name}</h3>
+                        </div>
                     </div>
                 </div>
                 <div className='flex gap-5 text-2xl items-center'>
@@ -112,13 +111,13 @@ const InChat = ({ profile }: any) => {
                 </div>
             </div>
             <div className='min-h-[400px] max-h-[400px] overflow-auto my-4' ref={messageContainerRef}>
-                {messageHistory[profile.name]?.length === profile.name ? (
+                {messageHistory[profile.name]?.length === 0 ? (
                     <p>No messages found.</p>
                 ) : (
                     messageHistory[profile.name]?.map((msg, index) => (
                         <div key={index}>
                             {msg.message && <p>{msg.message}</p>}
-
+                            {/* (rest of the message display logic) */}
                         </div>
                     ))
                 )}

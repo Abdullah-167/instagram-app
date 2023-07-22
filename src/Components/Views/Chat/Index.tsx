@@ -6,23 +6,20 @@ import InChat from './InChat'
 
 const Index = () => {
 
-    const [selectedProfile, setSelectedProfile] = useState(null);
+    const [showInChat, setShowInChat] = useState(null);
+
 
     const handleProfileClick = (profile: any) => {
-        setSelectedProfile(profile);
+        setShowInChat(profile);
     };
 
     return (
         <div className='flex'>
             <Sidebar />
             <Profiles onProfileClick={handleProfileClick} />
-            {selectedProfile ? (
-                <InChat profile={selectedProfile} />
-            ) : (
-                <Messages />
-            )}
+            {showInChat ? <InChat profile={showInChat} /> : <Messages />}
         </div>
-    );
-};
+    )
+}
 
-export default Index;
+export default Index

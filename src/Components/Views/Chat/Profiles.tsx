@@ -20,7 +20,6 @@ const Profiles = ({ onProfileClick }: any) => {
         onProfileClick(profile);
     };
 
-
     return (
         <div>
             <div>
@@ -61,7 +60,7 @@ const Profiles = ({ onProfileClick }: any) => {
                                     >
                                         <div className='flex gap-3 '>
                                             <div>
-                                                <Image className='rounded-full' src={item.img} alt={'Padhana'} width={50} height={50} />
+                                                <Image className='rounded-full object-cover max-w-[50px] min-w-[50px] max-h-[50px] min-h-[50px]' src={item.img} alt={'Padhana'} width={50} height={50} />
                                             </div>
                                             <div>
                                                 <h3 className='text-sm pt-1'>{item.name}</h3>
@@ -94,13 +93,13 @@ export default Profiles
 const data = [
     {
         img: '/padhana.jpg',
-        name: 'Abdullah',
+        name: 'oy_itx_padhana',
         follow: 'Follow',
         message: 'You sent a message',
     },
     {
-        img: '/padhana.jpg',
-        name: 'oy_itx_padhana',
+        img: '/girl3.webp',
+        name: 'Lana',
         follow: 'Follow',
         message: 'You sent a message',
     },
