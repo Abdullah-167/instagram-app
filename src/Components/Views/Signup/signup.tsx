@@ -5,6 +5,7 @@ import { AiFillFacebook } from 'react-icons/ai';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 
 const Signup = () => {
+    
     const [inputText, setInputText] = useState('');
     const [password, setPassword] = useState('');
     const [fullName, setFullName] = useState('');

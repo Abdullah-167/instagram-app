@@ -8,13 +8,30 @@ import { GrMicrophone } from 'react-icons/gr';
 import { FiImage } from 'react-icons/fi';
 import { AiOutlineHeart } from 'react-icons/ai';
 
-const InChat = ({ profile }: any) => {
-    const [message, setMessage] = useState('');
-    const [messageHistory, setMessageHistory] = useState({ [profile.name]: [] });
-    const [recording, setRecording] = useState(false);
-    const recorderRef = useRef(null);
+interface Message {
+    message: string;
+    // Add other message properties here (e.g., audio, image, etc.)
+}
 
-    const handleMessage = (e) => {
+interface Profile {
+    name: string;
+    img: string;
+    // Add other profile properties here if needed
+}
+
+interface InChatProps {
+    profile: Profile;
+}
+
+const InChat: React.FC<InChatProps> = ({ profile }) => {
+    const [message, setMessage] = useState('');
+    const [messageHistory, setMessageHistory] = useState<{ [key: string]: Message[] }>({
+        [profile.name]: [],
+    });
+    const [recording, setRecording] = useState(false);
+    const recorderRef = useRef<MediaRecorder | null>(null);
+
+    const handleMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(e.target.value);
     };
 
@@ -28,8 +45,7 @@ const InChat = ({ profile }: any) => {
         }
     };
 
-
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             handleSendMessage();
@@ -43,7 +59,7 @@ const InChat = ({ profile }: any) => {
                 const mediaRecorder = new MediaRecorder(stream);
                 recorderRef.current = mediaRecorder;
 
-                const chunks = [];
+                const chunks: Blob[] = [];
                 mediaRecorder.addEventListener('dataavailable', (event) => {
                     if (event.data.size > 0) {
                         chunks.push(event.data);
@@ -52,7 +68,7 @@ const InChat = ({ profile }: any) => {
 
                 mediaRecorder.addEventListener('stop', () => {
                     const recordedBlob = new Blob(chunks, { type: 'audio/webm' });
-                    setSentMessages((prevMessages) => [...prevMessages, { audio: recordedBlob }]);
+                    // Handle the recorded audio blob (e.g., save or send it)
                     chunks.length = 0; // Clear the chunks array
                     setRecording(false);
                 });
@@ -72,8 +88,7 @@ const InChat = ({ profile }: any) => {
         }
     };
 
-
-    const messageContainerRef = useRef(null);
+    const messageContainerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         // Function to scroll to the bottom of the container
@@ -84,6 +99,7 @@ const InChat = ({ profile }: any) => {
         };
         scrollToBottom();
     }, [messageHistory, profile.name]);
+
 
     return (
         <div className='w-full'>
